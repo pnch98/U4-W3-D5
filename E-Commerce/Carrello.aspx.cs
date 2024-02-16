@@ -23,7 +23,7 @@ namespace E_Commerce
                     total += item.Price;
                 }
 
-                totalPrice.InnerText = "Prezzo totale: " + total;
+                totalPrice.InnerText = "Prezzo totale: " + total + "€";
             }
             else
             {

@@ -26,7 +26,7 @@
             </asp:Repeater>
             <div class="d-flex justify-content-between align-items-center mt-3">
                 <div>
-                    <p id="totalPrice" class="font-monospace mb-0" runat="server"></p>
+                    <p id="totalPrice" class="mb-0" runat="server"></p>
                     <asp:Button CssClass="btn btn-primary" ID="Button1" runat="server" Text="Acquista" />
                 </div>
                 <asp:Button CssClass="btn btn-danger" ID="RemoveAllBtn" runat="server" Text="Rimuovi tutto" OnClick="RemoveAll"/>
