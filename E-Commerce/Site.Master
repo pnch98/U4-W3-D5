@@ -53,8 +53,7 @@
                 </div>
                 <div>
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Carrello</a></li>
-
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Carrello.aspx">Carrello (<span runat="server" id="countCart">0</span>)</a></li>
                     </ul>
                 </div>
             </div>

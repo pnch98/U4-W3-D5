@@ -33,15 +33,15 @@ namespace E_Commerce
 
         public int getId() { return id; }
         public static HashSet<Article> getArticlesList() { return articlesList; }
-        public static Article getArticleById(int id)
+        public static Article GetArticleById(int id)
         {
             Article selectedArticle = null;
 
-            foreach (var item in articlesList)
+            foreach (Article article in articlesList)
             {
-                if (item.id == id)
+                if (article.Id == id)
                 {
-                    selectedArticle = item;
+                    selectedArticle = article;
                 }
             }
             return selectedArticle;

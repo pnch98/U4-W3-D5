@@ -9,16 +9,19 @@ namespace E_Commerce
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Controllo che la pagina non sia rirenderizzata tramite interazione
             if (!IsPostBack)
             {
-                Session["cart"] = new List<Article>();
+                //Svuoto la lista di articoli e la rigenero in modo da non moltiplicarla al refresh
+                Article.getArticlesList().Clear();
+                GenerateArticles();
+                //Mi collego al repeater di Default.aspx e gli passo come sorgente il mio hashset di articoli
+                Repeater.DataSource = Article.getArticlesList();
+                Repeater.DataBind();
             }
-            Article.getArticlesList().Clear();
-            GenerateArticles();
-            Repeater.DataSource = Article.getArticlesList();
-            Repeater.DataBind();
         }
 
+        //Metodo che genera 12 articoli e li inserisce nell'hashset statico presente nella classe Article
         protected void GenerateArticles()
         {
             Article.AddArticle(new Article("Super Mario Wonder", "Brand new Super Mario 2d style game!", 69.99, "https://m.media-amazon.com/images/I/81PDm2hnsjL._AC_SY879_.jpg"));
@@ -35,14 +38,27 @@ namespace E_Commerce
             Article.AddArticle(new Article("Crash™ Team Racing Nitro-Fueled", "Crash is back in the driver’s seat! Get ready to go fur-throttle with Crash Team Racing Nitro-Fueled - the authentic CTR experience, now fully-remastered and revved up to the max", 28.99, "https://m.media-amazon.com/images/I/81xOmCNm6iL._SY679_.jpg"));
         }
 
+        //Metodo che aggiunge un articolo al carrello
         protected void AddToCart(object sender, EventArgs e)
         {
+            //Prendo l'id dell'articolo dal CommandArgument del Button
             Button btn = (Button)sender;
-            int id = Convert.ToInt16(btn.CommandArgument);
+            int id = int.Parse(btn.CommandArgument);
 
+            //Se non esiste, creo una Session con chiave "cart" e la inizializzo come List<Article>
+            if (Session["cart"] == null)
+            {
+                Session["cart"] = new List<Article>();
+            }
+
+            //Riprendo la lista
             List<Article> cart = (List<Article>)Session["cart"];
-            cart.Add(Article.getArticleById(id));
+
+            //Cerco l'articolo corrispondente all'id e lo aggiungo alla lista cart, poi riaggiorno la Session con il cart aggiornato
+            Article myArticle = Article.GetArticleById(id);
+            cart.Add(myArticle);
             Session["cart"] = cart;
+            Response.Redirect(Request.RawUrl); //Comando che forza il rendering così da avere feedback immediato all'aggiornamento del carrello
         }
     }
 }
